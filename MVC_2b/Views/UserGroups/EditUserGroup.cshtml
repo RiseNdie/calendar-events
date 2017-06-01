@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewBag.Title = "EditUserGroup";
+}
+
+<h2>Add or Edit a UserGroup</h2>
+@using (Html.BeginForm("EditUserGroup", "UserGroups", FormMethod.Post))
+{
+    MVC_2b.Models.UserGroup userGroup = (MVC_2b.Models.UserGroup)ViewBag.UserGroup;
+
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" value="@userGroup.Name">
+    </div>
+
+    <input type="submit" value="Save" />
+}
+

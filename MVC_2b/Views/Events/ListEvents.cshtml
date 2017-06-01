@@ -1,0 +1,107 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MVC_2b.Models.Event>
+    @{
+        ViewBag.Title = "ListEvents";
+    }
+    <h2>List Events</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "EditEvent", new { id = 0 })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.ActionLink("Name", "ListEvents", new
+       {
+           sortOn =
+"Name",
+           orderBy = ViewBag.OrderBy,
+           pSortOn = ViewBag.SortOn
+       })
+            </th>
+            <th>
+                @Html.ActionLink("Conference Room", "ListEvents", new
+   {
+       sortOn =
+"ConfRoom",
+       orderBy = ViewBag.OrderBy,
+       pSortOn = ViewBag.SortOn
+   })
+            </th>
+            <th>
+                @Html.ActionLink("Date", "ListEvents", new
+{
+    sortOn = "Date",
+    orderBy = ViewBag.OrderBy,
+    pSortOn = ViewBag.SortOn
+})
+                </th>
+            <th>
+                @Html.ActionLink("Starting Hour", "ListEvents", new
+{
+    sortOn = "StartHour",
+    orderBy = ViewBag.OrderBy,
+    pSortOn = ViewBag.SortOn
+})
+                </th>
+                <th>
+                @Html.ActionLink("Ending Hour", "ListEvents", new
+                {
+                    sortOn = "EndHour",
+                    orderBy = ViewBag.OrderBy,
+                    pSortOn = ViewBag.SortOn
+                })
+            </th>
+            <th>Users Attending</th>
+            <th></th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ConferenceRoomName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartHour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndHour)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsersAttending)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditEvent", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteEvent", new {id = item.Id}) |
+                    @Html.ActionLink("View Calendar", "CalendarView", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="pagedList">
+        @Html.PagedListPager(Model, page => Url.Action("ListEvents", new
+        {
+            page,
+            sortOn = ViewBag.SortOn,
+            orderBy = ViewBag.OrderBy,
+            pSortOn = ViewBag.SortOn
+        }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+
+    </div>
+
+

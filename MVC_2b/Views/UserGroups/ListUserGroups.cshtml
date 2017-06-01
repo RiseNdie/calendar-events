@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "ListUserGroups";
+}
+
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MVC_2b.Models.UserGroup>
+
+<h2>UserGroups</h2>
+
+<p>
+    @Html.ActionLink("Create New", "EditUserGroup", new { id = 0 })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Id
+        </th>
+        <th>
+            @Html.ActionLink("Name", "ListUserGroups", new
+       {
+           sortOn =
+"Name",
+           orderBy = ViewBag.OrderBy,
+           pSortOn = ViewBag.SortOn
+       })
+        </th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditUserGroup", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "DeleteUserGroup", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="pagedList">
+    @Html.PagedListPager(Model, page => Url.Action("ListUserGroups", new
+{
+    page,
+    sortOn = ViewBag.SortOn,
+    orderBy = ViewBag.OrderBy,
+    pSortOn = ViewBag.SortOn
+}), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>

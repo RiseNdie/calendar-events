@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "EditUser";
+}
+
+<h2>Add or Edit a User</h2>
+
+@using (Html.BeginForm("EditUser", "Users", FormMethod.Post))
+{
+    MVC_2b.Models.User user = (MVC_2b.Models.User)ViewBag.User;
+
+    <div>
+        <label>First name</label>
+        <input type="text" name="FirstName" value="@user.FirstName">
+    </div>
+
+    <div>
+        <label>Last name</label>
+        <input type="text" name="LastName" value="@user.LastName">
+    </div>
+
+    <div>
+        <label>Username</label>
+        <input type="text" name="Username" value="@user.Username">
+    </div>
+
+    <div>
+        <label>Password</label>
+        <input type="password" name="Password" value="@user.Password">
+    </div>
+
+    <div>
+        <label>Email</label>
+        <input type="email" name="Email" value="@user.Email">
+    </div>
+
+    <input type="submit" value="Save">
+
+}
+

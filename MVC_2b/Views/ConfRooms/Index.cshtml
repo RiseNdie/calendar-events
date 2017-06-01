@@ -1,0 +1,22 @@
+﻿@using Google.Apis.Calendar.v3
+@using Google.Apis.Services
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@{
+    var service = new CalendarService(new BaseClientService.Initializer()
+    {
+        ApiKey = "AIzaSyCs83fQ9iQPWclA4-BsGz0a0ZMmXOn4xnI",
+        ApplicationName = "MVC_Project",
+
+    });
+    var events = service.Events.List("marsata95@gmail.com").Execute();
+    foreach (var myEvent in events.Items)
+    {
+        <p>@string.Format("Event: {0} Start: {1} End: {2}", myEvent.Summary, myEvent.Start.DateTime.ToString(), myEvent.End.DateTime.ToString());</p>
+    }
+}
+<h2>Index</h2>
+

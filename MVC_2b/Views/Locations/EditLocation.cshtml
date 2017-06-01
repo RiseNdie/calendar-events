@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewBag.Title = "EditLocation";
+}
+
+<h2>Add or Edit Location</h2>
+
+@using (Html.BeginForm("EditLocation", "Locations", FormMethod.Post))
+{
+    MVC_2b.Models.Location location = (MVC_2b.Models.Location)ViewBag.Location;
+
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" value="@location.Name">
+    </div>
+
+    <div>
+        <label>Adress</label>
+        <input type="text" name="Adress" value="@location.Adress">
+    </div>
+
+    <div>
+        <label>Floor</label>
+        <input type="text" name="Floor" value="@location.Floor">
+    </div>
+
+    <div>
+        <label>Room Number</label>
+        <input type="text" name="RoomNumber" value="@location.RoomNumber">
+    </div>
+
+    <input type="submit" value="Save">
+
+}
+
+
+

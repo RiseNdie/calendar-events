@@ -1,0 +1,86 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MVC_2b.Models.User>
+
+    @{
+        ViewBag.Title = "ListUsers";
+    }
+
+
+    <h2>Users</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "EditUser", new { id = 0 })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.ActionLink("First Name", "ListUsers", new
+       {
+           sortOn =
+"FirstName",
+           orderBy = ViewBag.OrderBy,
+           pSortOn = ViewBag.SortOn
+       })
+            </th>
+            <th>
+                @Html.ActionLink("Last Name", "ListUsers", new
+   {
+       sortOn =
+"LastName",
+       orderBy = ViewBag.OrderBy,
+       pSortOn = ViewBag.SortOn
+   })
+            </th>
+            <th>
+                @Html.ActionLink("Username", "ListUsers", new
+{
+    sortOn = "Username",
+    orderBy = ViewBag.OrderBy,
+    pSortOn = ViewBag.SortOn
+})
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Username)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditUser", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteUser", new { id = item.Id })
+                </td>
+            </tr>
+        }
+    </table>
+
+    <div class="pagedList">
+        @Html.PagedListPager(Model, page => Url.Action("ListUsers", new
+{
+    page,
+    sortOn = ViewBag.SortOn,
+    orderBy = ViewBag.OrderBy,
+    pSortOn = ViewBag.SortOn
+}), PagedListRenderOptions.ClassicPlusFirstAndLast)
+    </div>
+

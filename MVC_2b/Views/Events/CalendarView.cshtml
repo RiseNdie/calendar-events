@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "CalendarView";
+}
+
+<h2>Calendar View for @ViewBag.CurrentEventName</h2>
+<link href="@Url.Content("~/Css/CalendarView.css")" rel="stylesheet" type="text/css" />
+<table>
+    <tr>
+        @{
+
+            int days = ViewBag.DaysInMonth;
+            int startingDay = ViewBag.StartingDayOfWeek;
+            int eventDay = ViewBag.EventDate;
+            <td>&Monday</td><td>Tuesday</td>
+            @:<td>Wednesday</td><td>Thursday</td><td>Friday</td><td>Saturday</td><td>Sunday</td></tr><tr>
+            for (int i = 1; i < days + startingDay; i++)
+            {
+                int tmpDay = i - startingDay + 1;
+                if (i % 7 == 0)
+                {
+
+                    if (tmpDay == eventDay)
+                    {
+                        @:
+                        <td style="color: red">@tmpDay</td>
+                    }
+                    else
+                    {
+                        @:
+                        <td>@tmpDay</td>
+                    }
+                    @:</tr><tr>
+                }
+                else if (i < startingDay)
+                {
+                    @:<td>&nbsp;</td>
+                }
+                else
+                {
+                    if (tmpDay == eventDay)
+                    {
+                        @:<td style="color: red">@tmpDay</td>
+                    }
+                    else
+                    {
+                        @:<td>@tmpDay</td>
+                    }
+                }
+            }
+        }
+</table>

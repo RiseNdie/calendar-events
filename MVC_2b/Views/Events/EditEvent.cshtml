@@ -1,0 +1,115 @@
+﻿@using MVC_2b.Models
+@using MVC_2b.Repositories
+@using PagedList;
+@using PagedList.Mvc;
+
+@model IPagedList<MVC_2b.Models.Event>
+    @{
+        ViewBag.Title = "EditEvent";
+    }
+
+    <h2>Edit Event</h2>
+    @Html.ValidationSummary(String.Empty, new { @style = "color:red" })
+    @using (Html.BeginForm("EditEvent", "Events", FormMethod.Post))
+    {
+        TempData["oldEventName"] = null;
+        TempData["oldEventRoom"] = null;
+        MVC_2b.Models.Event events = (MVC_2b.Models.Event) ViewBag.Events;
+        if (ViewBag.WasSomethingWrong == false)
+        {
+            TempData["oldEventName"] = events.Name;
+            TempData["oldEventRoom"] = events.ConferenceRoomName;
+        }
+
+       
+        <div>
+            <label>Name</label>
+            <input type="text" name="name" value="@events.Name">
+        </div>
+    <div>
+        <label>Conference Rooms</label>
+        <br />
+        @{
+            string currentRoom = events.ConferenceRoomName;
+        ConfRoomsRepository allConfRooms = new ConfRoomsRepository();
+        List<ConfRoom> listConfRooms = allConfRooms.GetAll();
+            <select name="confRoomsList" size="15">
+                @if (events.Id > 0)
+                {
+                    foreach (var room in listConfRooms)
+                    {
+                        if (room.ToString() != currentRoom)
+                        {
+                            <option>@room.ToString()</option>
+                        }
+                        else
+                        {
+                            <option selected="selected">@room.ToString()</option>
+                        }
+                    }
+                }
+                else
+                {
+                    foreach (var room in listConfRooms)
+                    {
+                       <option selected="selected">@room.ToString()</option>
+                    }
+                }
+            </select>
+        }
+    </div>
+
+        <div>
+            <label>Event Date</label>
+            <input type="text" name="eventDate" value="@Convert.ToDateTime(events.EventDate).ToString("d")">
+        </div>
+
+        <div>
+            <label>Starting Hour</label>
+            <input type="text" name="startHour" value="@events.StartHour">
+        </div>
+
+        <div>
+            <label>Ending Hour</label>
+            <input type="text" name="endHour" value="@events.EndHour">
+        </div>
+        <div>
+            <label>Users Attending</label>
+            <br/>
+            @{
+                string[] tmpArray = new string[100];
+                if (events.UsersAttending != null)
+                {
+                    tmpArray = events.UsersAttending.Split(',').ToArray();
+                }
+
+                UsersRepository allUsers = new UsersRepository();
+                List<User> listUsers = allUsers.GetAll();
+                <select name="usersList" size="15" multiple="multiple">
+        @if (events.Id > 0)
+        {
+            foreach (var user in listUsers)
+            {
+                if (!tmpArray.Contains(user.ToString()))
+                {
+                    <option>@user.ToString()</option>
+                }
+                else
+                {
+                    <option selected="selected">@user.ToString()</option>
+                }
+            }
+        }
+        else
+        {
+            foreach (var user in listUsers)
+            {
+                <option selected="selected">@user.ToString()</option>
+            }
+        }
+                </select>
+    }
+        </div>
+        <input type="submit" value="Save">
+        
+    }

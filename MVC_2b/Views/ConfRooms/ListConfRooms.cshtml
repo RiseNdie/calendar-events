@@ -1,0 +1,75 @@
+﻿@using Google.Apis.Calendar.v3
+@using Google.Apis.Calendar.v3.Data
+@using Google.Apis.Services
+@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<MVC_2b.Models.ConfRoom>
+
+    @{
+        ViewBag.Title = "ListConfRooms";
+    }
+
+    <h2>List Conference Rooms</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "EditConfRoom", new { id = 0 })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                @Html.ActionLink("Name", "ListConfRooms", new
+       {
+           sortOn =
+"Name",
+           orderBy = ViewBag.OrderBy,
+           pSortOn = ViewBag.SortOn
+       })
+            </th>
+            <th>
+                @Html.ActionLink("Availability", "ListConfRooms", new
+                {
+                    sortOn =
+                        "IsFree",
+                    orderBy = ViewBag.OrderBy,
+                    pSortOn = ViewBag.SortOn
+                })
+            </th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsFree)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditConfRoom", new { id = item.Id }) |
+                    @Html.ActionLink("Delete", "DeleteConfRoom", new {id = item.Id})
+                </td>
+            </tr>
+        }
+    </table>
+
+<div class="pagedList">
+    @Html.PagedListPager(Model, page => Url.Action("ListConfRooms", new
+    {
+        page,
+        sortOn = ViewBag.SortOn,
+        orderBy = ViewBag.OrderBy,
+        pSortOn = ViewBag.SortOn
+    }), PagedListRenderOptions.ClassicPlusFirstAndLast)
+</div>
+@{
+}
+
+
+

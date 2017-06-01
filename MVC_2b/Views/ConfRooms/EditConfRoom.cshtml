@@ -1,0 +1,24 @@
+﻿@model MVC_2b.Models.ConfRoom
+@{
+    ViewBag.Title = "EditConfRoom";
+}
+
+<h2>EditConfRoom</h2>
+
+@using (Html.BeginForm("EditConfRoom", "ConfRooms", FormMethod.Post))
+{
+    MVC_2b.Models.ConfRoom confRoom = (MVC_2b.Models.ConfRoom)ViewBag.ConfRoom;
+    TempData["OldConfRoomName"] = confRoom.Name;
+    <div>
+        <label>Name</label>
+        <input type="text" name="Name" value="@confRoom.Name">
+    </div>
+    <div>
+        <label>Is Availible</label>
+        @Html.CheckBoxFor(x => x.IsFree)
+    </div>
+
+    <input type="submit" value="Save">
+
+}
+
